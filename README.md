@@ -23,7 +23,7 @@ Para ejecutar estas pruebas, es necesario contar con:
 
 | Variable | Descripción | Ejemplo de Valor |
 | :--- | :--- | :--- |
-| `base_url_tfback` | URL base del backend principal | `https://tubackend-railway.app` |
+| `base_url_tfback` | URL base del backend principal | `https://tfback-production-back.up.railway.app` |
 | `base_url_fhir` | URL base del servidor clínico FHIR | `https://fhirserver-production-fhir.up.railway.app` |
 | `access_token` | Token JWT de sesión activa (Nota: no incluir la palabra "Bearer", solo el token) | `eyJhbGciOiJIUzI1NiIsInR...` |
 

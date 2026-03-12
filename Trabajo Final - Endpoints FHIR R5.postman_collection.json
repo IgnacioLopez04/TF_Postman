@@ -1,0 +1,704 @@
+{
+  "info": {
+    "_postman_id": "43230e45-3a69-45fe-9415-2787aadd1cf9",
+    "name": "Trabajo Final - Endpoints FHIR R5",
+    "description": "Colección completa de endpoints del fhir_server documentados en ENDPOINTS_FHIR.md",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39539760"
+  },
+  "item": [
+    {
+      "name": "1. Patient (Pacientes)",
+      "item": [
+        {
+          "name": "Listar Pacientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient?includeInactive=true",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient"
+              ],
+              "query": [
+                {
+                  "key": "includeInactive",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Paciente por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient/HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient",
+                "HASH123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Paciente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"identifier\": [\n    {\n      \"system\": \"http://mi-servidor.com/fhir/dni\",\n      \"value\": \"12345678\"\n    }\n  ],\n  \"name\": [\n    {\n      \"family\": \"García\",\n      \"given\": [\"Juan\", \"Pablo\"]\n    }\n  ],\n  \"birthDate\": \"1990-01-01\",\n  \"telecom\": [\n    {\n      \"system\": \"phone\",\n      \"value\": \"3512345678\"\n    },\n    {\n      \"system\": \"email\",\n      \"value\": \"juan.p.garcia@example.com\"\n    }\n  ],\n  \"address\": [\n    {\n      \"line\": [\"Calle Falsa 123 1°A\"],\n      \"city\": \"Córdoba\",\n      \"state\": \"Córdoba\",\n      \"country\": \"AR\"\n    }\n  ],\n  \"extension\": [\n    {\n      \"url\": \"http://mi-servidor.com/fhir/StructureDefinition/id_mutual\",\n      \"valueString\": \"20\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Paciente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"id\": \"HASH123\",\n  \"name\": [\n    {\n      \"family\": \"García\",\n      \"given\": [\"Juan\", \"Pablo\"]\n    }\n  ],\n  \"birthDate\": \"1990-02-15\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient/HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient",
+                "HASH123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Desactivar Paciente (Borrado Lógico)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"id\": \"HASH123\",\n  \"active\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient/HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient",
+                "HASH123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reactivar Paciente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Patient\",\n  \"id\": \"HASH123\",\n  \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Patient/HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Patient",
+                "HASH123"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Practitioner (Usuarios)",
+      "item": [
+        {
+          "name": "Obtener Tipos de Usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Practitioner/$get-user-types",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Practitioner",
+                "$get-user-types"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Practitioner",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Practitioner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Practitioner\",\n  \"identifier\": [\n    {\n      \"system\": \"http://mi-servidor.com/fhir/dni\",\n      \"value\": \"30111222\"\n    }\n  ],\n  \"name\": [\n    {\n      \"family\": \"Pérez\",\n      \"given\": [\"Ana\"]\n    }\n  ],\n  \"telecom\": [\n    {\n      \"system\": \"email\",\n      \"value\": \"ana.perez@example.com\"\n    }\n  ],\n  \"birthDate\": \"1985-06-10\",\n  \"extension\": [\n    {\n      \"url\": \"http://mi-servidor/fhir/StructureDefinition/id-tipo-usuario\",\n      \"valueString\": \"2\"\n    }\n  ],\n  \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Practitioner",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Practitioner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activar/Desactivar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Practitioner\",\n  \"id\": \"USERHASH1\",\n  \"active\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Practitioner/USERHASH1",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Practitioner",
+                "USERHASH1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. DiagnosticReport (Informes)",
+      "item": [
+        {
+          "name": "Listar Informes por Paciente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport?patient=HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport"
+              ],
+              "query": [
+                {
+                  "key": "patient",
+                  "value": "HASH123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Informe Normal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"DiagnosticReport\",\n  \"status\": \"final\",\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://loinc.org\",\n        \"code\": \"18748-4\",\n        \"display\": \"Informe de evaluación\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/HASH123\"\n  },\n  \"effectiveDateTime\": \"2025-10-01T10:15:30-03:00\",\n  \"conclusion\": \"Texto completo del informe de evaluación...\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Anexo de Informe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"DiagnosticReport\",\n  \"status\": \"final\",\n  \"subject\": {\n    \"reference\": \"DiagnosticReport/REPORT_HASH_ID\"\n  },\n  \"effectiveDateTime\": \"2025-10-02T09:00:00-03:00\",\n  \"conclusion\": \"Comentario/anexo adicional sobre la evolución...\",\n  \"extension\": [\n    {\n      \"url\": \"http://mi-servidor/fhir/StructureDefinition/is-annex\",\n      \"valueBoolean\": true\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Anexos de Informe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport?annex=REPORT_HASH_ID",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport"
+              ],
+              "query": [
+                {
+                  "key": "annex",
+                  "value": "REPORT_HASH_ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. DiagnosticReport (Historia Fisiátrica)",
+      "item": [
+        {
+          "name": "Obtener Historia Fisiátrica (Bundle)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport/$get-historia?patient=HASH123",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport",
+                "$get-historia"
+              ],
+              "query": [
+                {
+                  "key": "patient",
+                  "value": "HASH123"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Historia Fisiátrica",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"DiagnosticReport\",\n  \"status\": \"final\",\n  \"subject\": {\n    \"reference\": \"Patient/HASH123\"\n  },\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://loinc.org\",\n        \"code\": \"11450-4\",\n        \"display\": \"Problem List Reported\"\n      }\n    ]\n  },\n  \"extension\": [\n    {\n      \"url\": \"http://mi-servidor/fhir/StructureDefinition/fisiologico\",\n      \"valueString\": \"{\\\"peso\\\":70,\\\"talla\\\":1.75,\\\"imc\\\":22.9}\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DiagnosticReport",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DiagnosticReport"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. DocumentReference (Archivos)",
+      "item": [
+        {
+          "name": "Crear DocumentReference (Archivo)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"DocumentReference\",\n  \"status\": \"current\",\n  \"subject\": {\n    \"reference\": \"Patient/HASH123\"\n  },\n  \"description\": \"Informe de radiografía de tobillo\",\n  \"content\": [\n    {\n      \"attachment\": {\n        \"contentType\": \"application/pdf\",\n        \"url\": \"https://storage.example.com/files/tobillo-123.pdf\",\n        \"title\": \"rx-tobillo-123.pdf\"\n      }\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DocumentReference",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DocumentReference"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Archivos por Paciente y Tipo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/DocumentReference?patient=HASH123&fileType=pdf",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "DocumentReference"
+              ],
+              "query": [
+                {
+                  "key": "patient",
+                  "value": "HASH123"
+                },
+                {
+                  "key": "fileType",
+                  "value": "pdf"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Catálogos (Organization & Location)",
+      "item": [
+        {
+          "name": "Listar Mutuales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Organization?_type=insurance",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Organization"
+              ],
+              "query": [
+                {
+                  "key": "_type",
+                  "value": "insurance"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Prestaciones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Organization?_type=program",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Organization"
+              ],
+              "query": [
+                {
+                  "key": "_type",
+                  "value": "program"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Provincias",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Location?_type=province",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Location"
+              ],
+              "query": [
+                {
+                  "key": "_type",
+                  "value": "province"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Ciudades por Provincia",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url_fhir}}/fhir/Location?provincia=2",
+              "host": [
+                "{{base_url_fhir}}"
+              ],
+              "path": [
+                "fhir",
+                "Location"
+              ],
+              "query": [
+                {
+                  "key": "provincia",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url_fhir",
+      "value": "https://fhirserver-production-fhir.up.railway.app",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "pega_aqui_tu_token_jwt",
+      "type": "string"
+    }
+  ]
+}
